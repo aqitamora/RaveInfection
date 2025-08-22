@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://r1iupsmrddys"]
+
+[ext_resource type="Texture2D" uid="uid://cx71lurtcmmp0" path="res://assets/textures/rope.png" id="1_icxtj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghbyf"]
+size = Vector2(1, 3.3245)
+
+[node name="Rope" type="Node2D"]
+
+[node name="Anker" type="RigidBody2D" parent="."]
+freeze = true
+
+[node name="Rope1" type="RigidBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Rope1"]
+texture = ExtResource("1_icxtj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rope1"]
+scale = Vector2(1, 0.9)
+shape = SubResource("RectangleShape2D_ghbyf")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Rope1"]
+position = Vector2(0, -1.417)
+scale = Vector2(0.34, 0.095)
+node_a = NodePath("../../Anker")
+node_b = NodePath("..")
+
+[node name="Rope2" type="RigidBody2D" parent="."]
+position = Vector2(0, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="Rope2"]
+texture = ExtResource("1_icxtj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rope2"]
+scale = Vector2(1, 0.9)
+shape = SubResource("RectangleShape2D_ghbyf")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Rope2"]
+position = Vector2(0, -1.417)
+scale = Vector2(0.34, 0.095)
+node_a = NodePath("..")
+node_b = NodePath("../../Rope1")
+
+[node name="Rope3" type="RigidBody2D" parent="."]
+position = Vector2(0, 6)
+
+[node name="Sprite2D" type="Sprite2D" parent="Rope3"]
+texture = ExtResource("1_icxtj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rope3"]
+scale = Vector2(1, 0.9)
+shape = SubResource("RectangleShape2D_ghbyf")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="Rope3"]
+position = Vector2(0, -1.417)
+scale = Vector2(0.34, 0.095)
+node_a = NodePath("..")
+node_b = NodePath("../../Rope2")
