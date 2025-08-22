@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://bt2x4y6e1kgwi"]
+
+[ext_resource type="Texture2D" uid="uid://dtrc1vg203jf6" path="res://assets/sprites/police_blank.png" id="1_dh4s4"]
+
+[sub_resource type="Animation" id="Animation_d5cpa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_dh4s4"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_wu47s"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vc5q3"]
+_data = {
+&"RESET": SubResource("Animation_d5cpa"),
+&"idle": SubResource("Animation_dh4s4"),
+&"run": SubResource("Animation_wu47s")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d5cpa"]
+radius = 2.0
+height = 12.0
+
+[node name="Police_NPC" type="CharacterBody2D"]
+
+[node name="State_Machine" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.168627, 0.270588, 0.439216, 1)
+texture = ExtResource("1_dh4s4")
+hframes = 6
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vc5q3")
+}
+
+[node name="Physhical_collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_d5cpa")
