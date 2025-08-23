@@ -64,7 +64,9 @@ _data = {
 radius = 2.0
 height = 12.0
 
-[node name="Police_NPC" type="CharacterBody2D"]
+[node name="Police_NPC" type="CharacterBody2D" groups=["police"]]
+collision_layer = 8
+collision_mask = 13
 
 [node name="State_Machine" type="Node" parent="."]
 
@@ -74,7 +76,7 @@ texture = ExtResource("1_dh4s4")
 hframes = 6
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Animation_Player" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_vc5q3")
 }

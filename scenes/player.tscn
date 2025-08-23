@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ceeaomffi40hf"]
+[gd_scene load_steps=11 format=3 uid="uid://ceeaomffi40hf"]
 
 [ext_resource type="Script" uid="uid://cat7fr1mxkk76" path="res://scripts/player/player.gd" id="1_23wab"]
 [ext_resource type="Script" uid="uid://dckn6vnn8v08" path="res://scripts/player/player_state_machine.gd" id="2_t4yy7"]
@@ -67,6 +67,9 @@ _data = {
 radius = 2.5
 height = 12.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
+radius = 5.0
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_23wab")
@@ -76,11 +79,12 @@ script = ExtResource("2_t4yy7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.552941, 0.709804, 0.501961, 1)
+z_index = 2
 texture = ExtResource("3_qhqgy")
 hframes = 6
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Animation_Player" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_gxykf")
 }
@@ -91,3 +95,17 @@ shape = SubResource("CapsuleShape2D_ihm2b")
 
 [node name="Camera2D_ScreenShake" parent="." instance=ExtResource("4_dqkch")]
 zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+drag_left_margin = 0.3
+drag_right_margin = 0.3
+
+[node name="Infection_Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Infection_Area"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_dqkch")
+debug_color = Color(0.7284, 0.474407, 0, 0.42)
+
+[connection signal="body_entered" from="Infection_Area" to="." method="_on_infection_area_body_entered"]

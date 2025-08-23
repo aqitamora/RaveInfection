@@ -3,8 +3,9 @@ class_name state_machine_base
 
 
 var _current_state
-
-@onready var _animation_player = $"../AnimationPlayer"
+@warning_ignore("unused_private_class_variable")
+@onready var _animation_player = $"../Animation_Player"
+@warning_ignore("unused_private_class_variable")
 @onready var _parent = $".."
 
 func InitState(_init_state):

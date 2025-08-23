@@ -1,5 +1,8 @@
 extends CharacterBase
 
+@warning_ignore("unused_private_class_variable")
+@onready var _camera : Camera2D = $Camera2D_ScreenShake
+
 func _physics_process(delta: float) -> void:
 	GetInput()
 
@@ -12,3 +15,8 @@ func GetInput():
 	SpriteFlip()
 
 	return _direction
+
+
+func _on_infection_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("NPC"):
+		body.Infected.emit()

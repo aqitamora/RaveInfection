@@ -9,10 +9,10 @@ enum _states{
 func _ready() -> void:
 	InitState(_states.Idle)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
-func _physics_process(delta: float) -> void:	
+func _physics_process(_delta: float) -> void:	
 	match _current_state:
 		_states.Idle:
 			IdleState()

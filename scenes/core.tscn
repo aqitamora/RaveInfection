@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsy4ex7y3ydd8"]
+[gd_scene load_steps=5 format=3 uid="uid://dsy4ex7y3ydd8"]
 
 [ext_resource type="PackedScene" uid="uid://ceeaomffi40hf" path="res://scenes/player.tscn" id="2_c8oal"]
 [ext_resource type="PackedScene" uid="uid://dq52h3e665mhm" path="res://scenes/npc/npc.tscn" id="2_gmp2s"]
 [ext_resource type="PackedScene" uid="uid://bt2x4y6e1kgwi" path="res://scenes/npc/police_npc.tscn" id="3_qapo8"]
+[ext_resource type="PackedScene" uid="uid://cnyv4ra47schq" path="res://scenes/enviroument/crate_env.tscn" id="4_gmp2s"]
 
 [node name="core" type="Node2D"]
 
-[node name="Base_NPC" parent="." instance=ExtResource("2_c8oal")]
+[node name="player" parent="." instance=ExtResource("2_c8oal")]
 position = Vector2(237, 167)
 
 [node name="NPC" parent="." instance=ExtResource("2_gmp2s")]
@@ -14,3 +15,12 @@ position = Vector2(173, 161)
 
 [node name="Police_NPC" parent="." instance=ExtResource("3_qapo8")]
 position = Vector2(215, 148)
+
+[node name="Crate_env" parent="." instance=ExtResource("4_gmp2s")]
+position = Vector2(206, 190)
+
+[node name="NPC2" parent="." instance=ExtResource("2_gmp2s")]
+position = Vector2(180, 195)
+
+[node name="NPC3" parent="." instance=ExtResource("2_gmp2s")]
+position = Vector2(268, 152)

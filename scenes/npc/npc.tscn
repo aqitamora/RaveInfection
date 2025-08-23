@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dq52h3e665mhm"]
+[gd_scene load_steps=13 format=3 uid="uid://dq52h3e665mhm"]
 
 [ext_resource type="Script" uid="uid://himqmy64sikp" path="res://scripts/npc/npc.gd" id="1_dpyoa"]
 [ext_resource type="Script" uid="uid://boq2ehxobgmrt" path="res://scripts/npc/npc_state_machine.gd" id="1_pcwmf"]
 [ext_resource type="Texture2D" uid="uid://cc1857om254ln" path="res://assets/sprites/npc_blank.png" id="1_sspvn"]
+[ext_resource type="PackedScene" uid="uid://cqkeout44xlnc" path="res://assets/expl_particle.tscn" id="4_r4bp4"]
 
 [sub_resource type="Animation" id="Animation_dpyoa"]
 length = 0.001
@@ -69,8 +70,15 @@ height = 12.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_dpyoa"]
 radius = 15.0
 
-[node name="NPC" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_r4bp4"]
+radius = 26.0192
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_woxlu"]
+radius = 5.0
+
+[node name="NPC" type="CharacterBody2D" groups=["NPC"]]
 collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_dpyoa")
 
 [node name="State_Machine" type="Node" parent="."]
@@ -78,11 +86,12 @@ script = ExtResource("1_pcwmf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.74902, 0.819608, 0.898039, 1)
+z_index = 1
 texture = ExtResource("1_sspvn")
 hframes = 6
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Animation_Player" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_woxlu")
 }
@@ -91,16 +100,41 @@ libraries = {
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_sspvn")
 
-[node name="DirectionTimer" type="Timer" parent="."]
+[node name="Direction_Timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
 
-[node name="EvadeArea" type="Area2D" parent="."]
+[node name="Evade_Infect_Area" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EvadeArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Evade_Infect_Area"]
 shape = SubResource("CircleShape2D_dpyoa")
 debug_color = Color(0.70523, 0.451583, 0.510717, 0.42)
 
-[connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
+[node name="Chasing_Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 28
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chasing_Area"]
+shape = SubResource("CircleShape2D_r4bp4")
+debug_color = Color(2.59906e-06, 0.63825, 0.381246, 0.42)
+
+[node name="Infection_Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 20
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Infection_Area"]
+shape = SubResource("CircleShape2D_woxlu")
+debug_color = Color(0.7284, 0.474407, 0, 0.42)
+
+[node name="ExplParticle" parent="." instance=ExtResource("4_r4bp4")]
+modulate = Color(0.392157, 0.529412, 0.34902, 1)
+
+[connection signal="timeout" from="Direction_Timer" to="." method="_on_direction_timer_timeout"]
+[connection signal="body_entered" from="Evade_Infect_Area" to="." method="_on_evade_area_body_entered"]
+[connection signal="body_exited" from="Evade_Infect_Area" to="." method="_on_evade_area_body_exited"]
+[connection signal="body_entered" from="Chasing_Area" to="." method="_on_chasing_area_body_entered"]
+[connection signal="body_entered" from="Infection_Area" to="." method="_on_infection_area_body_entered"]
